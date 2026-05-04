@@ -1,0 +1,16 @@
+{
+  "name": "schedewl-selenium-tests",
+  "version": "1.0.0",
+  "description": "Selenium automated test suite for Schedewl web application",
+  "scripts": {
+    "test": "mocha --timeout 30000 --reporter spec test/**/*.test.js",
+    "test:report": "mocha --timeout 30000 --reporter mocha-junit-reporter test/**/*.test.js"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chromedriver": "^127.0.0",
+    "mocha": "^10.2.0",
+    "mocha-junit-reporter": "^2.2.1",
+    "selenium-webdriver": "^4.12.0"
+  }
+}
