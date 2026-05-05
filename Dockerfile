@@ -1,7 +1,6 @@
 FROM node:20-bookworm-slim
 
-RUN apt-get update && apt-get install -y \
-    chromium \
+RUN chromium \
     chromium-driver \
     && rm -rf /var/lib/apt/lists/*
 
