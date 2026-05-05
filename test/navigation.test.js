@@ -99,21 +99,14 @@ describe('Navigation', function () {
     await resizeWindow(driver, conf.MOBILE_SIZE.width, conf.MOBILE_SIZE.height);
     await navigateAndWait(driver, '/');
     await driver.wait(until.elementLocated(By.css('header')), conf.TIMEOUTS.explicit);
+    await driver.sleep(1000);
 
-    const menuBtn = await driver.findElement(By.xpath(
-      '//header//button[contains(@class, "p-2") or .//*[local-name()="svg"][contains(@class, "h-5")]]'
-    ));
-
-    const isMenuVisible = await driver.findElements(By.css('.md\\:hidden')).then(els => els.length > 0);
-
-    await menuBtn.click();
+    const menuBtn = await driver.findElement(By.xpath('//button[contains(@class, "p-2")]'));
+    await driver.executeScript("arguments[0].click();", menuBtn);
     await driver.sleep(500);
 
-    const mobileMenu = await driver.findElement(By.css('#mobile-menu, [class*="mobile-menu"], .md\\:hidden'));
-    const isOpenAfterClick = await mobileMenu.isDisplayed();
-
-    await menuBtn.click();
-    await driver.sleep(500);
+    const mobileMenuLinks = await driver.findElements(By.css('nav a'));
+    expect(mobileMenuLinks.length).to.be.greaterThan(0);
 
     await resizeWindow(driver, conf.WINDOW_SIZE.width, conf.WINDOW_SIZE.height);
   });

@@ -26,19 +26,16 @@ describe('Pricing Page', function () {
     ));
     expect(await studentSection.isDisplayed()).to.be.true;
 
-    const planCards = await driver.findElements(By.xpath(
-      '//*[contains(@class, "Card")]//*[contains(@class, "CardHeader")]'
-    ));
-    expect(planCards.length).to.be.greaterThanOrEqual(6);
+    const planNames = await driver.findElements(By.css('h3.text-2xl'));
+    expect(planNames.length).to.be.greaterThanOrEqual(6);
   });
 
   it('TC-019: Pricing page FAQ section contains expected questions', async function () {
     await navigateAndWait(driver, '/pricing');
-    await driver.wait(until.elementLocated(By.xpath('//h2[contains(text(), "faq")]'), conf.TIMEOUTS.explicit) ||
-      until.elementLocated(By.css('h2')), conf.TIMEOUTS.explicit);
+    await driver.wait(until.elementLocated(By.css('h1')), conf.TIMEOUTS.explicit);
 
     const faqHeaders = await driver.findElements(By.xpath(
-      '//h3[contains(text(), "?") or //*[contains(@class, "faq")]//h3'
+      '//h3[contains(text(), "?")]'
     ));
 
     const generalHeaders = await driver.findElements(By.css('h3'));

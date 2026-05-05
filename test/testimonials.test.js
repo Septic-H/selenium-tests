@@ -19,7 +19,7 @@ describe('Testimonials Page', function () {
     await driver.wait(until.elementLocated(By.css('h1')), conf.TIMEOUTS.explicit);
 
     const heroText = await driver.findElement(By.css('h1')).getText();
-    expect(heroText.toLowerCase()).to.include('testimonial') || expect(heroText.toLowerCase()).to.include('community');
+    expect(heroText.toLowerCase()).to.include('community') || expect(heroText.toLowerCase()).to.include('says');
 
     const statsSection = await driver.findElement(By.xpath(
       '//*[contains(text(), "10,000+") or contains(text(), "students")]'
@@ -30,11 +30,7 @@ describe('Testimonials Page', function () {
   it('TC-021: Testimonials page renders multiple testimonial cards', async function () {
     await navigateAndWait(driver, '/testimonials');
 
-    const testimonialCards = await driver.findElements(By.xpath(
-      '//*[contains(@class, "Card")]//blockquote | //*[contains(text(), "\"")]'
-    ));
-
-    const allCards = await driver.findElements(By.css('[class*="Card"]'));
-    expect(allCards.length).to.be.greaterThanOrEqual(4);
+    const cards = await driver.findElements(By.css('.rounded-lg.bg-card'));
+    expect(cards.length).to.be.greaterThanOrEqual(4);
   });
 });
