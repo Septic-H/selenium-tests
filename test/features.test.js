@@ -3,18 +3,18 @@ const { expect } = require('chai');
 const { createDriver, navigateAndWait } = require('../util');
 const conf = require('../conf');
 
-describe('Features Page', function() {
+describe('Features Page', function () {
   let driver;
 
-  before(async function() {
-    driver = createDriver();
+  before(async function () {
+    driver = await createDriver();
   });
 
-  after(async function() {
+  after(async function () {
     if (driver) await driver.quit();
   });
 
-  it('TC-016: Features page loads and renders all 9 feature cards', async function() {
+  it('TC-016: Features page loads and renders all 9 feature cards', async function () {
     await navigateAndWait(driver, '/features');
     await driver.wait(until.elementLocated(By.css('h1')), conf.TIMEOUTS.explicit);
 
@@ -25,7 +25,7 @@ describe('Features Page', function() {
     expect(cards.length).to.be.greaterThanOrEqual(9);
   });
 
-  it('TC-017: Features page "Get Started Free" CTA navigates to /sign-up', async function() {
+  it('TC-017: Features page "Get Started Free" CTA navigates to /sign-up', async function () {
     await navigateAndWait(driver, '/features');
 
     const ctaBtn = await driver.findElement(By.xpath(

@@ -3,18 +3,18 @@ const { expect } = require('chai');
 const { createDriver, navigateAndWait } = require('../util');
 const conf = require('../conf');
 
-describe('Testimonials Page', function() {
+describe('Testimonials Page', function () {
   let driver;
 
-  before(async function() {
-    driver = createDriver();
+  before(async function () {
+    driver = await createDriver();
   });
 
-  after(async function() {
+  after(async function () {
     if (driver) await driver.quit();
   });
 
-  it('TC-020: Testimonials page loads and renders stats section', async function() {
+  it('TC-020: Testimonials page loads and renders stats section', async function () {
     await navigateAndWait(driver, '/testimonials');
     await driver.wait(until.elementLocated(By.css('h1')), conf.TIMEOUTS.explicit);
 
@@ -27,7 +27,7 @@ describe('Testimonials Page', function() {
     expect(await statsSection.isDisplayed()).to.be.true;
   });
 
-  it('TC-021: Testimonials page renders multiple testimonial cards', async function() {
+  it('TC-021: Testimonials page renders multiple testimonial cards', async function () {
     await navigateAndWait(driver, '/testimonials');
 
     const testimonialCards = await driver.findElements(By.xpath(

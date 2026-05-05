@@ -2,28 +2,26 @@ const { Builder } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const conf = require('./conf');
 
-function createDriver() {
+async function createDriver() {
   const options = new chrome.Options();
   conf.CHROME_OPTIONS.forEach(opt => options.addArguments(opt));
 
-  const driver = new Builder()
+  const driver = await new Builder()
     .forBrowser('chrome')
     .setChromeOptions(options)
     .build();
 
-  driver.manage().setTimeouts({
+  await driver.manage().setTimeouts({
     implicit: conf.TIMEOUTS.implicit,
     pageLoad: conf.TIMEOUTS.explicit,
-    script: conf.TIMEOUTS.script
+    script: conf.TIMEOUTS.script,
   });
 
   return driver;
 }
 
-function navigateAndWait(driver, path, timeout = conf.TIMEOUTS.explicit) {
-  return driver.wait(function() {
-    return driver.get(conf.BASE_URL + path);
-  }, timeout);
+async function navigateAndWait(driver, path) {
+  await driver.get(conf.BASE_URL + path);
 }
 
 async function clickAndWaitForNavigation(driver, element) {
@@ -51,11 +49,10 @@ async function assertElementText(driver, by, expectedText, description) {
 }
 
 async function waitForElement(driver, by, timeout = conf.TIMEOUTS.explicit) {
-  await driver.wait(function() {
-    return driver.findElements(by).then(function(elements) {
-      return elements.length > 0;
-    });
-  }, timeout);
+  await driver.wait(
+    () => driver.findElements(by).then(els => els.length > 0),
+    timeout
+  );
 }
 
 async function resizeWindow(driver, width, height) {
@@ -69,5 +66,5 @@ module.exports = {
   assertElementPresent,
   assertElementText,
   waitForElement,
-  resizeWindow
+  resizeWindow,
 };

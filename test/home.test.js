@@ -3,18 +3,18 @@ const { expect } = require('chai');
 const { createDriver, navigateAndWait, assertElementPresent, waitForElement } = require('../util');
 const conf = require('../conf');
 
-describe('Home Page', function() {
+describe('Home Page', function () {
   let driver;
 
-  before(async function() {
-    driver = createDriver();
+  before(async function () {
+    driver = await createDriver();
   });
 
-  after(async function() {
+  after(async function () {
     if (driver) await driver.quit();
   });
 
-  it('TC-001: Home page title and hero content renders correctly', async function() {
+  it('TC-001: Home page title and hero content renders correctly', async function () {
     await navigateAndWait(driver, '/');
     await driver.wait(until.titleContains('schedewl'), conf.TIMEOUTS.explicit);
 
@@ -30,7 +30,7 @@ describe('Home Page', function() {
     expect(stats.length).to.be.greaterThanOrEqual(3);
   });
 
-  it('TC-002: Home page "Get Started" CTA navigates to /sign-up', async function() {
+  it('TC-002: Home page "Get Started" CTA navigates to /sign-up', async function () {
     await navigateAndWait(driver, '/');
 
     const getStartedBtn = await driver.findElement(By.xpath(
@@ -43,7 +43,7 @@ describe('Home Page', function() {
     expect(currentUrl).to.include('/sign-up');
   });
 
-  it('TC-003: Home page "Learn More" CTA navigates to /features', async function() {
+  it('TC-003: Home page "Learn More" CTA navigates to /features', async function () {
     await navigateAndWait(driver, '/');
 
     const learnMoreBtn = await driver.findElement(By.xpath(

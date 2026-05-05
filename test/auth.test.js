@@ -3,18 +3,18 @@ const { expect } = require('chai');
 const { createDriver, navigateAndWait } = require('../util');
 const conf = require('../conf');
 
-describe('Authentication Pages', function() {
+describe('Authentication Pages', function () {
   let driver;
 
-  before(async function() {
-    driver = createDriver();
+  before(async function () {
+    driver = await createDriver();
   });
 
-  after(async function() {
+  after(async function () {
     if (driver) await driver.quit();
   });
 
-  it('TC-010: Sign-in page renders all form fields correctly', async function() {
+  it('TC-010: Sign-in page renders all form fields correctly', async function () {
     await navigateAndWait(driver, '/sign-in');
     await driver.wait(until.elementLocated(By.id('email')), conf.TIMEOUTS.explicit);
 
@@ -28,7 +28,7 @@ describe('Authentication Pages', function() {
     expect(await submitBtn.getText()).to.include('sign in');
   });
 
-  it('TC-011: Sign-in with invalid credentials shows error message', async function() {
+  it('TC-011: Sign-in with invalid credentials shows error message', async function () {
     await navigateAndWait(driver, '/sign-in');
     await driver.wait(until.elementLocated(By.id('email')), conf.TIMEOUTS.explicit);
 
@@ -50,7 +50,7 @@ describe('Authentication Pages', function() {
     expect(errorFound).to.be.true;
   });
 
-  it('TC-012: Sign-up page renders all form fields correctly', async function() {
+  it('TC-012: Sign-up page renders all form fields correctly', async function () {
     await navigateAndWait(driver, '/sign-up');
     await driver.wait(until.elementLocated(By.id('name')), conf.TIMEOUTS.explicit);
 
@@ -65,7 +65,7 @@ describe('Authentication Pages', function() {
     expect(await submitBtn.isDisplayed()).to.be.true;
   });
 
-  it('TC-013: Sign-up form validation on empty submission', async function() {
+  it('TC-013: Sign-up form validation on empty submission', async function () {
     await navigateAndWait(driver, '/sign-up');
 
     const submitBtn = await driver.findElement(By.xpath('//button[@type="submit"]'));
@@ -73,12 +73,12 @@ describe('Authentication Pages', function() {
 
     const nameInput = await driver.findElement(By.id('name'));
     const validationMessage = await nameInput.getAttribute('validationMessage') ||
-                              await driver.switchTo().activeElement().getAttribute('validationMessage');
+      await driver.switchTo().activeElement().getAttribute('validationMessage');
 
     expect(validationMessage).to.not.be.null;
   });
 
-  it('TC-014: Role selection page renders correctly for authenticated users', async function() {
+  it('TC-014: Role selection page renders correctly for authenticated users', async function () {
     await navigateAndWait(driver, '/role-selection');
     await driver.wait(until.elementLocated(By.css('form, [class*="card"]')), conf.TIMEOUTS.explicit);
 
@@ -93,7 +93,7 @@ describe('Authentication Pages', function() {
     expect(await teacherBtn.isDisplayed()).to.be.true;
   });
 
-  it('TC-015: Dashboard redirects unauthenticated users to sign-in', async function() {
+  it('TC-015: Dashboard redirects unauthenticated users to sign-in', async function () {
     await navigateAndWait(driver, '/dashboard');
 
     await driver.wait(until.urlContains('/sign-in'), conf.TIMEOUTS.explicit * 2);

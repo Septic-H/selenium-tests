@@ -3,18 +3,18 @@ const { expect } = require('chai');
 const { createDriver, navigateAndWait, resizeWindow } = require('../util');
 const conf = require('../conf');
 
-describe('Navigation', function() {
+describe('Navigation', function () {
   let driver;
 
-  before(async function() {
-    driver = createDriver();
+  before(async function () {
+    driver = await createDriver();
   });
 
-  after(async function() {
+  after(async function () {
     if (driver) await driver.quit();
   });
 
-  it('TC-004: Navbar links navigate to correct pages', async function() {
+  it('TC-004: Navbar links navigate to correct pages', async function () {
     await navigateAndWait(driver, '/');
     await driver.wait(until.elementLocated(By.tagName('header')), conf.TIMEOUTS.explicit);
 
@@ -36,7 +36,7 @@ describe('Navigation', function() {
     }
   });
 
-  it('TC-005: Sign In and Sign Up buttons in navbar work', async function() {
+  it('TC-005: Sign In and Sign Up buttons in navbar work', async function () {
     await navigateAndWait(driver, '/');
 
     const signInBtn = await driver.findElement(By.xpath(
@@ -55,7 +55,7 @@ describe('Navigation', function() {
     expect(await driver.getCurrentUrl()).to.include('/sign-up');
   });
 
-  it('TC-006: Footer links navigate correctly', async function() {
+  it('TC-006: Footer links navigate correctly', async function () {
     await navigateAndWait(driver, '/');
     await driver.wait(until.elementLocated(By.css('footer')), conf.TIMEOUTS.explicit);
 
@@ -75,7 +75,7 @@ describe('Navigation', function() {
     }
   });
 
-  it('TC-007: Sign in link on sign-up page navigates to sign-in', async function() {
+  it('TC-007: Sign in link on sign-up page navigates to sign-in', async function () {
     await navigateAndWait(driver, '/sign-up');
     const signInLink = await driver.findElement(By.xpath(
       '//a[contains(@href, "/sign-in") and contains(text(), "sign in")]'
@@ -85,7 +85,7 @@ describe('Navigation', function() {
     expect(await driver.getCurrentUrl()).to.include('/sign-in');
   });
 
-  it('TC-008: Sign up link on sign-in page navigates to sign-up', async function() {
+  it('TC-008: Sign up link on sign-in page navigates to sign-up', async function () {
     await navigateAndWait(driver, '/sign-in');
     const signUpLink = await driver.findElement(By.xpath(
       '//a[contains(@href, "/sign-up") and contains(text(), "sign up")]'
@@ -95,7 +95,7 @@ describe('Navigation', function() {
     expect(await driver.getCurrentUrl()).to.include('/sign-up');
   });
 
-  it('TC-009: Mobile hamburger menu opens and closes', async function() {
+  it('TC-009: Mobile hamburger menu opens and closes', async function () {
     await resizeWindow(driver, conf.MOBILE_SIZE.width, conf.MOBILE_SIZE.height);
     await navigateAndWait(driver, '/');
     await driver.wait(until.elementLocated(By.css('header')), conf.TIMEOUTS.explicit);
